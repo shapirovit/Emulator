@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.pflb.emulator.model.dto.ClientDto;
 import ru.pflb.emulator.service.ClientService;
 
+import java.io.File;
 import java.util.Random;
 
 @Service
@@ -20,16 +21,21 @@ public class ClientServiceImpl implements ClientService {
                 .cardNumber("" + Math.round(Math.random() * 987654321))
                 .isActive(Math.round(Math.random() * 10) % 2 == 0)
                 .INN("" + Math.round(Math.random() * 123456789))
-                .photo("path")
+                .photo(this.getRandPhotoPath())
         .build();
 
         return client;
     }
 
-    public  String getRandPhotoPach() {
+    public  String getRandPhotoPath() {
+        File images = new File("./image");
+        String[] files = images.list();
+        double rand = Math.random();
 
+        int index = (int) (rand * files.length);
+        String path = "./image/" + files[index];
 
-        return "path";
+        return path;
     }
 
     public String getString() {
